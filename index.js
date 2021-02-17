@@ -35,7 +35,8 @@ ipcMain.on('generateMatrix', async (event) => {
   
   await eig.ready
   M = new eig.Matrix.random(10,10);
-  win.webContents.send('resultMatrix1', M.print("M"));
+  M.print("M")
+  // win.webContents.send('resultMatrix1', M.print("M"));
 });
 
 ipcMain.on('calcMatrix', async (event) => {
@@ -44,6 +45,7 @@ ipcMain.on('calcMatrix', async (event) => {
 
   await eig.ready
   M.inverse();
-  win.webContents.send('resultMatrix2', M.print("M"));
+  M.print("M")
+  // win.webContents.send('resultMatrix2', M.print("M"));
   eig.GC.flush();
 });
