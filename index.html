@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Testing Eigen Js Web Assembly!</title>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+</head>
+<body style="background: white;">
+    <h1>Testing Eigen Js Web Assembly!</h1>
+    
+    <label for="matrix1">Matrix 1</label>
+    <textarea name="matrix1" id="matrix1" cols="30" rows="10"></textarea>
+
+    <label for="matrix1">Result</label>
+    <textarea name="matrix2" id="matrix2" cols="30" rows="10"></textarea>
+
+    <button id="btn-input">Fill Random Matrix</button>
+
+    <button id="btn-calc">Calculate</butto>
+
+    <script>
+        const {electron, ipcRenderer} = require('electron');
+
+        const btnInput = document.querySelector('button#btn-input');
+        const btnCalc = document.querySelector('button#btn-calc');
+        const matrix1 = document.querySelector('textarea#matrix1');
+        const matrix2 = document.querySelector('textarea#matrix2');
+
+        let M;
+        btnInput.addEventListener('click', async () => {
+            ipcRenderer.send('generateMatrix');
+        });
+        btnCalc.addEventListener('click', async () => {
+            ipcRenderer.send('calcMatrix');
+        })
+
+        ipcRenderer.on('resultMatrix1', (event, matrixResult) => {
+            matrix1.innerText = matrixResult;
+        });
+
+        ipcRenderer.on('resultMatrix2', (event, matrixResult) => {
+            matrix2.innerText = matrixResult;
+        });
+
+    </script>
+</body>
+</html>
